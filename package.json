@@ -1,0 +1,22 @@
+{
+  "name": "ccxt-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alok-m/ccxt-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alok-m/ccxt-testing/issues"
+  },
+  "homepage": "https://github.com/alok-m/ccxt-testing#readme",
+  "devDependencies": {
+    "ccxt": "^1.21.4"
+  }
+}
