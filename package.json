@@ -17,6 +17,17 @@
   },
   "homepage": "https://github.com/alok-m/ccxt-testing#readme",
   "devDependencies": {
-    "ccxt": "^1.21.4"
+    "ccxt": "^1.21.4",
+    "as-table": "1.0.55",
+    "ololog": "1.1.149",
+    "fs": "0.0.1-security",
+    "ansicolor": "1.1.92"
+  },
+  "dependencies": {
+    "asciichart": "^1.5.9",
+    "bignumber.js": "^9.0.0",
+    "ethereumjs-abi": "^0.6.8",
+    "ethereumjs-util": "^6.2.0",
+    "web3": "^1.2.4"
   }
 }
