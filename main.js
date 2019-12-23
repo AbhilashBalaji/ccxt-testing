@@ -68,20 +68,41 @@ let printOrderBook = async (id, symbol1, depth) => {
     let exchangeFound = ccxt.exchanges.indexOf(id) > -1
     if (exchangeFound) {
         let exchange = new ccxt[id]({ enableRateLimit: true })
-        let markets = await exchange.loadMarkets()
+        let symbols_in_exchange = await exchange.loadMarkets()
         // console.log(exchange);
+        for(var symbol in symbols_in_exchange){
+            // console.log(symbol);
+            if(symbols_in_exchange[symbol].base != 'BTC'){continue;}
 
+            let orderbook = await exchange.fetchOrderBook(symbols_in_exchange[symbol].symbol)
+            log(symbols_in_exchange[symbol].symbol)
+            for(var order in orderbook){
+                log(order);
+                //find highest of asks
+                //find lowest of bids
+                //store these in graph[exchange][highest_ask] and graph[exchange][lowest_bid]
+            }
+            //find which exchange has highest of highest_asks, say A, and which exchange has lowest of lowest_bids, say B.
+            //sell btc on A
+            //buy btc on B
+
+        }
+        return;
         for (var market in markets) {
-            if (markets[market].base != 'BTC')
+            if (markets[market].base != 'USD')
                 continue;
             /*
-                 the EUR/USD bid and offer prices were as follows:
+            for [A/B], if ask price is X and bid price is Y
+            ask : someone looking to buy 1 A, is willing to pay X units of B
+            bid : someone selling 1 A, would receive Y units of B
+            spread % = ((ask - bid)/ask ) * 100
 
-                Bid price: 1.3350 USD per EUR
-                Ask price: 1.3354 USD per EUR
-                So someone looking to buy euros would have to pay $1.3354 
-                per euro while someone looking to sell euros would only receive $1.3350.
-                The spread is $0.0004 and the spread percentage is roughly 0.03%.
+            The EUR/USD bid and offer prices were as follows:
+            Bid price: 1.3350 USD per EUR
+            Ask price: 1.3354 USD per EUR
+            So someone looking to buy euros would have to pay $1.3354 
+            per euro while someone looking to sell euros would only receive $1.3350.
+            The spread is $0.0004 and the spread percentage is roughly 0.03%.
 
             */
             
