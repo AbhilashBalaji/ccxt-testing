@@ -63,30 +63,57 @@ let printUsage = function () {
 
 let printOrderBook = async (id, symbol1, depth) => {
 
-    var graphs;
+    let graphs=new Object();
+    graphs.exchanges=Array();
     //     // check if the exchange is supported by ccxt
     let exchangeFound = ccxt.exchanges.indexOf(id) > -1
     if (exchangeFound) {
         let exchange = new ccxt[id]({ enableRateLimit: true })
+        graphs.exchanges.push(id);
+        graphs.exchanges[id]=Array();
         let symbols_in_exchange = await exchange.loadMarkets()
-        // console.log(exchange);
+        
         for(var symbol in symbols_in_exchange){
             // console.log(symbol);
+            graphs.exchanges[id].push(symbol);
+            graphs.exchanges[id][symbol]=new Array();
             if(symbols_in_exchange[symbol].base != 'BTC'){continue;}
-
             let orderbook = await exchange.fetchOrderBook(symbols_in_exchange[symbol].symbol)
             log(symbols_in_exchange[symbol].symbol)
-            for(var order in orderbook){
-                log(order);
+            try {
                 //find highest of asks
                 //find lowest of bids
-                //store these in graph[exchange][highest_ask] and graph[exchange][lowest_bid]
+                // console.log(orderbook.asks.length);
+                
+                var asks = orderbook.asks
+                var bids = orderbook.bids
+                console.log(asks);
+                
+                var max = asks.reduce(function (a, b) {
+                    return Math.max(a[0], b[0]);
+                });
+                var min = bids.reduce(function (a, b) {
+                    return Math.min(a[0], b[0]);
+                });                
+                graphs.exchanges[id][symbol].push(max);
+                console.log(max,min);
+                
+            } catch ( e) {
+                console.log(e);
+                
             }
+            
+                //find highest of asks
+                //find lowest of bids
+                //store these in graph[exchange][highest_ask][lowest_bid] and graph[exchange][lowest_bid]
+            
             //find which exchange has highest of highest_asks, say A, and which exchange has lowest of lowest_bids, say B.
             //sell btc on A
             //buy btc on B
 
         }
+        console.log(graphs);
+        
         return;
         for (var market in markets) {
             if (markets[market].base != 'USD')
